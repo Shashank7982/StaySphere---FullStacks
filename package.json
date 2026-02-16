@@ -1,0 +1,38 @@
+{
+  "name": "staysphere",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npm run build",
+    "serve": "nodemon app.js",
+    "tailwind": "tailwindcss -i ./views/input.css -o ./public/output.css --watch",
+    "dev": "concurrently \"npm run serve\" \"npm run tailwind\"",
+    "build:css": "tailwindcss -i ./views/input.css -o ./public/output.css --minify",
+    "build": "npm run build:css",
+    "start": "node app.js",
+    "seed": "node config/seedDatabase.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "connect-mongodb-session": "^5.0.0",
+    "concurrently": "^9.2.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "express-validator": "^7.2.1",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
+    "multer": "^2.0.2",
+    "mysql2": "^3.14.3",
+    "nodemon": "^3.1.10",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  }
+}
