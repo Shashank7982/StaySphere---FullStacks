@@ -128,10 +128,17 @@ app.use(errorController.pageNotFound);
 // starting server after connecting to db
 const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB and start server
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running at http://localhost:${PORT}/store`);
+// Connect to MongoDB and start server (only in local development)
+if (process.env.NODE_ENV !== 'production') {
+    connectDB().then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running at http://localhost:${PORT}/store`);
+        });
     });
-});
+} else {
+    // For Vercel, just connect to DB without starting a server
+    connectDB();
+}
 
+// Export the app for Vercel
+module.exports = app;
