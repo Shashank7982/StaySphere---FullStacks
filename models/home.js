@@ -12,7 +12,8 @@ const homeSchema=mongoose.Schema({
   rating:{type:String,required:true},
   photo:String,
   description:String,
-  rulesPdf:String
+  rulesPdf:String,
+  category:{type:String,enum:['beachfront','amazing-views','cabins','last-minute','all'],default:'all'}
 });
 
 module.exports=mongoose.model("Home",homeSchema);

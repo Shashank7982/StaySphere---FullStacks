@@ -20,7 +20,7 @@ exports.getIndex = (req, res, next) => {
 
 exports.getHomes = (req, res, next) => {
     Home.find().then(registeredHomes => {
-        res.render('store/homeList', { registeredHomes: registeredHomes, pageTitle: 'homes list', currentPage: 'home', isLoggedIn: req.isLoggedIn, user: req.session.user });
+        res.render('store/homeList', { registeredHomes: registeredHomes, pageTitle: 'homes list', currentPage: 'home', isLoggedIn: req.isLoggedIn, user: req.session.user, searchQuery: '' });
     });
 
 };
@@ -51,8 +51,19 @@ exports.getBookings = (req, res, next) => {
 
 
 exports.getFavouriteList = async (req, res, next) => {
+    // Check if user is logged in
+    if (!req.session.user || !req.session.user._id) {
+        return res.redirect('/auth/login');
+    }
+
     const userId = req.session.user._id;
     let user = await User.findById({ _id: userId });
+
+    // Check if user exists
+    if (!user) {
+        return res.redirect('/auth/login');
+    }
+
     if (!user.favourites) {
         user.favourites = []
     }
@@ -102,3 +113,34 @@ exports.getRulesPdf = async (req, res, next) => {
     const rulesPdfPath = path.join(rootDir, rulesPdf.replace('/uploads/', 'uploads/'))
     res.download(rulesPdfPath, 'Rules.pdf');
 }
+
+exports.searchHomes = async (req, res, next) => {
+    try {
+        const { location, checkin, checkout, guests } = req.query;
+
+        let query = {};
+
+        // Search by location if provided
+        if (location && location.trim() !== '') {
+            query.$or = [
+                { location: { $regex: location, $options: 'i' } },
+                { houseName: { $regex: location, $options: 'i' } },
+                { description: { $regex: location, $options: 'i' } }
+            ];
+        }
+
+        const registeredHomes = await Home.find(query);
+
+        res.render('store/homeList', {
+            registeredHomes: registeredHomes,
+            pageTitle: 'Search Results',
+            currentPage: 'home',
+            isLoggedIn: req.isLoggedIn,
+            user: req.session.user,
+            searchQuery: location || ''
+        });
+    } catch (error) {
+        console.error('Search error:', error);
+        res.redirect('/store/homes');
+    }
+};

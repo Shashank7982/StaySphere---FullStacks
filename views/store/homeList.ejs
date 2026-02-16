@@ -1,312 +1,370 @@
 <%- include('../partials/head') %>
-</head>
-<body class="airbnb-bg min-h-screen font-sans">
-    <%- include('../partials/nav')%>
+    </head>
 
-    <main class="container mx-auto px-4 sm:px-6 py-8 mt-6 max-w-7xl">
-        <!-- Page Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl sm:text-4xl airbnb-title mb-2">Discover homes</h1>
-            <p class="airbnb-subtitle text-lg">Find your perfect stay from our curated collection</p>
-        </div>
+    <body class="airbnb-bg min-h-screen font-sans">
+        <%- include('../partials/nav')%>
 
-        <!-- Filter Bar (Airbnb-style) -->
-        <div class="flex items-center gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
-            <button class="airbnb-filter-btn active">
-                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                <span>All homes</span>
-            </button>
-            <button class="airbnb-filter-btn">
-                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                </svg>
-                <span>Beachfront</span>
-            </button>
-            <button class="airbnb-filter-btn">
-                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-                </svg>
-                <span>Amazing views</span>
-            </button>
-            <button class="airbnb-filter-btn">
-                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                </svg>
-                <span>Cabins</span>
-            </button>
-            <button class="airbnb-filter-btn">
-                <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Last-minute</span>
-            </button>
-        </div>
+            <main class="container mx-auto px-4 sm:px-6 py-8 mt-6 max-w-7xl">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <% if (typeof searchQuery !=='undefined' && searchQuery) { %>
+                        <h1 class="text-3xl sm:text-4xl airbnb-title mb-2">Search Results</h1>
+                        <p class="airbnb-subtitle text-lg">
+                            <%= registeredHomes.length %>
+                                <%= registeredHomes.length===1 ? 'home' : 'homes' %> found for "<%= searchQuery %>"
+                        </p>
+                        <% } else { %>
+                            <h1 class="text-3xl sm:text-4xl airbnb-title mb-2">Discover homes</h1>
+                            <p class="airbnb-subtitle text-lg">Find your perfect stay from our curated collection</p>
+                            <% } %>
+                </div>
 
-        <!-- Cards Grid -->
-        <div class="airbnb-grid">
-            <%registeredHomes.forEach((home)=>{%>
-            <!-- Single Card -->
-            <article class="airbnb-property-card group">
-                <a href="/store/homes/<%=home._id%>" class="block">
-                    <div class="airbnb-image-container">
-                        <img src="<%=home.photo%>" alt="<%=home.houseName%>" loading="lazy">
-                        
-                        <!-- Rating Badge -->
-                        <div class="airbnb-rating">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                <!-- Filter Bar (Airbnb-style) -->
+                <div class="flex items-center gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
+                    <button class="airbnb-filter-btn active">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <span>All homes</span>
+                    </button>
+                    <button class="airbnb-filter-btn">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span>Beachfront</span>
+                    </button>
+                    <button class="airbnb-filter-btn">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                        </svg>
+                        <span>Amazing views</span>
+                    </button>
+                    <button class="airbnb-filter-btn">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                        <span>Cabins</span>
+                    </button>
+                    <button class="airbnb-filter-btn">
+                        <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>Last-minute</span>
+                    </button>
+                </div>
+
+                <!-- Cards Grid -->
+                <div class="airbnb-grid">
+                    <%registeredHomes.forEach((home)=>{%>
+                        <!-- Single Card -->
+                        <article class="airbnb-property-card group">
+                            <a href="/store/homes/<%=home._id%>" class="block">
+                                <div class="airbnb-image-container">
+                                    <img src="<%=home.photo%>" alt="<%=home.houseName%>" loading="lazy">
+
+                                    <!-- Rating Badge -->
+                                    <div class="airbnb-rating">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path
+                                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.539 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                        <span>
+                                            <%=home.rating%>
+                                        </span>
+                                    </div>
+
+                                    <!-- Heart/Favorite Button (positioned absolutely) -->
+                                    <div class="absolute top-3 right-3 z-10"
+                                        onclick="event.preventDefault(); event.stopPropagation();">
+                                        <%-include('../partials/favourites',{home:home});%>
+                                    </div>
+
+                                    <!-- Superhost Badge (if rating >= 4.8) -->
+                                    <% if (home.rating>= 4.8) { %>
+                                        <div class="airbnb-superhost-badge">Superhost</div>
+                                        <% } %>
+                                </div>
+
+                                <div class="airbnb-card-content">
+                                    <!-- Location & Rating Row -->
+                                    <div class="flex justify-between items-start mb-1">
+                                        <p class="airbnb-location-text">
+                                            <%=home.location%>
+                                        </p>
+                                    </div>
+
+                                    <!-- Property Name -->
+                                    <h3 class="airbnb-property-title">
+                                        <%=home.houseName%>
+                                    </h3>
+
+                                    <!-- Dates (placeholder) -->
+                                    <p class="text-gray-500 text-sm mb-2">Nov 12 - 17</p>
+
+                                    <!-- Price -->
+                                    <div class="airbnb-price-row">
+                                        <span class="airbnb-price">₹<%=home.price%></span>
+                                        <span class="airbnb-price-unit">/ night</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        <%})%>
+                </div>
+
+                <!-- Empty State -->
+                <% if (!registeredHomes || registeredHomes.length===0) { %>
+                    <div class="max-w-md mx-auto text-center py-16">
+                        <div class="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <% if (typeof searchQuery !=='undefined' && searchQuery) { %>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    <% } else { %>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                        <% } %>
                             </svg>
-                            <span><%=home.rating%></span>
                         </div>
-                        
-                        <!-- Heart/Favorite Button (positioned absolutely) -->
-                        <div class="absolute top-3 right-3 z-10" onclick="event.preventDefault(); event.stopPropagation();">
-                            <%-include('../partials/favourites',{home:home});%>
-                        </div>
-                        
-                        <!-- Superhost Badge (if rating >= 4.8) -->
-                        <% if (home.rating >= 4.8) { %>
-                        <div class="airbnb-superhost-badge">Superhost</div>
-                        <% } %>
+                        <% if (typeof searchQuery !=='undefined' && searchQuery) { %>
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-2">No results found</h2>
+                            <p class="text-gray-500 mb-6">Try adjusting your search or browse all available homes</p>
+                            <a href="/store/homes" class="airbnb-btn-primary inline-flex px-6 py-3">
+                                Browse all homes
+                            </a>
+                            <% } else { %>
+                                <h2 class="text-2xl font-semibold text-gray-900 mb-2">No homes available</h2>
+                                <p class="text-gray-500 mb-6">Check back later for new listings</p>
+                                <% } %>
                     </div>
-                    
-                    <div class="airbnb-card-content">
-                        <!-- Location & Rating Row -->
-                        <div class="flex justify-between items-start mb-1">
-                            <p class="airbnb-location-text"><%=home.location%></p>
-                        </div>
-                        
-                        <!-- Property Name -->
-                        <h3 class="airbnb-property-title"><%=home.houseName%></h3>
-                        
-                        <!-- Dates (placeholder) -->
-                        <p class="text-gray-500 text-sm mb-2">Nov 12 - 17</p>
-                        
-                        <!-- Price -->
-                        <div class="airbnb-price-row">
-                            <span class="airbnb-price">₹<%=home.price%></span>
-                            <span class="airbnb-price-unit">/ night</span>
-                        </div>
-                    </div>
-                </a>
-            </article>
-            <%})%>
-        </div>
+                    <% } %>
+            </main>
 
-        <!-- Empty State -->
-        <% if (!registeredHomes || registeredHomes.length === 0) { %>
-        <div class="max-w-md mx-auto text-center py-16">
-            <div class="mx-auto w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-                <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-            </div>
-            <h2 class="text-2xl font-semibold text-gray-900 mb-2">No homes available</h2>
-            <p class="text-gray-500 mb-6">Check back later for new listings</p>
-        </div>
-        <% } %>
-    </main>
-    
-</body>
-</html>
+    </body>
 
-<style>
-    /* Airbnb Color Variables */
-    :root {
-        --airbnb-red: #FF5A5F;
-        --airbnb-dark-red: #E00007;
-        --airbnb-pink: #FF385C;
-        --airbnb-text: #222222;
-        --airbnb-gray: #717171;
-        --airbnb-light-gray: #F7F7F7;
-        --airbnb-border: #DDDDDD;
-    }
-    
-    /* Background */
-    .airbnb-bg {
-        background-color: #FFFFFF;
-    }
-    
-    /* Typography */
-    .airbnb-title {
-        color: var(--airbnb-text);
-        font-weight: 600;
-        letter-spacing: -0.02em;
-    }
-    
-    .airbnb-subtitle {
-        color: var(--airbnb-gray);
-        font-weight: 400;
-    }
-    
-    /* Filter Buttons */
-    .airbnb-filter-btn {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        padding: 12px 20px;
-        color: var(--airbnb-gray);
-        font-size: 12px;
-        font-weight: 500;
-        border-radius: 8px;
-        border: 1px solid transparent;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-        cursor: pointer;
-        background: transparent;
-    }
-    
-    .airbnb-filter-btn:hover {
-        color: var(--airbnb-text);
-        background: var(--airbnb-light-gray);
-    }
-    
-    .airbnb-filter-btn.active {
-        color: var(--airbnb-text);
-        border-color: var(--airbnb-text);
-        background: white;
-    }
-    
-    /* Hide scrollbar for filter bar */
-    .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-    .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-    }
-    
-    /* Grid */
-    .airbnb-grid {
-        display: grid;
-        gap: 32px;
-        grid-template-columns: repeat(1, 1fr);
-    }
-    
-    @media (min-width: 640px) {
-        .airbnb-grid {
-            grid-template-columns: repeat(2, 1fr);
+    </html>
+
+    <style>
+        /* Airbnb Color Variables */
+        :root {
+            --airbnb-red: #FF5A5F;
+            --airbnb-dark-red: #E00007;
+            --airbnb-pink: #FF385C;
+            --airbnb-text: #222222;
+            --airbnb-gray: #717171;
+            --airbnb-light-gray: #F7F7F7;
+            --airbnb-border: #DDDDDD;
         }
-    }
-    
-    @media (min-width: 1024px) {
-        .airbnb-grid {
-            grid-template-columns: repeat(3, 1fr);
+
+        /* Background */
+        .airbnb-bg {
+            background-color: #FFFFFF;
         }
-    }
-    
-    @media (min-width: 1280px) {
-        .airbnb-grid {
-            grid-template-columns: repeat(4, 1fr);
+
+        /* Typography */
+        .airbnb-title {
+            color: var(--airbnb-text);
+            font-weight: 600;
+            letter-spacing: -0.02em;
         }
-    }
-    
-    /* Property Card */
-    .airbnb-property-card {
-        cursor: pointer;
-    }
-    
-    .airbnb-property-card a {
-        text-decoration: none;
-        color: inherit;
-    }
-    
-    /* Image Container */
-    .airbnb-image-container {
-        position: relative;
-        aspect-ratio: 1 / 1;
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 12px;
-    }
-    
-    .airbnb-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-    
-    .airbnb-property-card:hover .airbnb-image-container img {
-        transform: scale(1.03);
-    }
-    
-    /* Rating Badge */
-    .airbnb-rating {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        background: white;
-        padding: 6px 10px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-        font-weight: 600;
-        font-size: 14px;
-    }
-    
-    .airbnb-rating svg {
-        color: var(--airbnb-red);
-    }
-    
-    /* Superhost Badge */
-    .airbnb-superhost-badge {
-        position: absolute;
-        bottom: 12px;
-        left: 12px;
-        background: rgba(255, 255, 255, 0.95);
-        color: var(--airbnb-text);
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        font-weight: 600;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    }
-    
-    /* Card Content */
-    .airbnb-card-content {
-        padding: 0 4px;
-    }
-    
-    .airbnb-location-text {
-        color: var(--airbnb-gray);
-        font-size: 15px;
-        font-weight: 500;
-    }
-    
-    .airbnb-property-title {
-        font-size: 15px;
-        color: var(--airbnb-text);
-        margin-bottom: 2px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-weight: 400;
-    }
-    
-    /* Price */
-    .airbnb-price-row {
-        display: flex;
-        align-items: baseline;
-        gap: 4px;
-        margin-top: 6px;
-    }
-    
-    .airbnb-price {
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--airbnb-text);
-    }
-    
-    .airbnb-price-unit {
-        color: var(--airbnb-text);
-        font-size: 15px;
-        font-weight: 400;
-    }
-</style>
+
+        .airbnb-subtitle {
+            color: var(--airbnb-gray);
+            font-weight: 400;
+        }
+
+        /* Filter Buttons */
+        .airbnb-filter-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px 20px;
+            color: var(--airbnb-gray);
+            font-size: 12px;
+            font-weight: 500;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .airbnb-filter-btn:hover {
+            color: var(--airbnb-text);
+            background: var(--airbnb-light-gray);
+        }
+
+        .airbnb-filter-btn.active {
+            color: var(--airbnb-text);
+            border-color: var(--airbnb-text);
+            background: white;
+        }
+
+        /* Hide scrollbar for filter bar */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Grid */
+        .airbnb-grid {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @media (min-width: 640px) {
+            .airbnb-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .airbnb-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .airbnb-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Property Card */
+        .airbnb-property-card {
+            cursor: pointer;
+        }
+
+        .airbnb-property-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Image Container */
+        .airbnb-image-container {
+            position: relative;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .airbnb-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .airbnb-property-card:hover .airbnb-image-container img {
+            transform: scale(1.03);
+        }
+
+        /* Rating Badge */
+        .airbnb-rating {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: white;
+            padding: 6px 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .airbnb-rating svg {
+            color: var(--airbnb-red);
+        }
+
+        /* Superhost Badge */
+        .airbnb-superhost-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--airbnb-text);
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Card Content */
+        .airbnb-card-content {
+            padding: 0 4px;
+        }
+
+        .airbnb-location-text {
+            color: var(--airbnb-gray);
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .airbnb-property-title {
+            font-size: 15px;
+            color: var(--airbnb-text);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 400;
+        }
+
+        /* Price */
+        .airbnb-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .airbnb-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--airbnb-text);
+        }
+
+        .airbnb-price-unit {
+            color: var(--airbnb-text);
+            font-size: 15px;
+            font-weight: 400;
+        }
+
+        /* Primary Button */
+        .airbnb-btn-primary {
+            background: linear-gradient(135deg, var(--airbnb-red) 0%, var(--airbnb-pink) 100%);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(255, 90, 95, 0.3);
+            text-decoration: none;
+        }
+
+        .airbnb-btn-primary:hover {
+            background: linear-gradient(135deg, var(--airbnb-dark-red) 0%, #E31C5F 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 90, 95, 0.4);
+        }
+    </style>
